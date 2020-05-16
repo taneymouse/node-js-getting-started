@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>HOME画面</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <h1>{{pageTitle}}</h1>
+    <form method="post">
+        <p>名前を選択してお題を確認</p>
+        <p>
+            <select name="user">
+                {{#each arrPersons as | val key |}}
+                <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+            <input type="submit" name="type" value="お題を確認">
+        </p>
+    </form>
+</body>
+
+</html>

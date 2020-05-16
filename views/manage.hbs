@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>管理画面</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <h1>{{pageTitle}}</h1>
+    <form method="post">
+        <p>名前：
+            <input type="text" name="name">
+            <input type="submit" name="type" value="register">
+        </p>
+    </form>
+    <form method="post">
+        <p>
+            <select name="wolf">
+                <option value="1" selected>ウルフは1人</option>
+                <option value="2">ウルフは2人</option>
+                <option value="3">ウルフは3人</option>
+            </select>
+            <input type="submit" name="type" value="allocate">
+        </p>
+    </form>
+</body>
+
+</html>
