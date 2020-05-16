@@ -3,6 +3,7 @@ const app = express();
 const hbs = require("hbs");
 const fs = require("fs");
 const bodyParser = require("body-parser");
+const PORT = process.env.PORT || 5000
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -35,20 +36,12 @@ app.get("/", (req, res) => {
         pageTitle: "HOME画面",
         arrPersons : persons,
     });
+
 });
 
 app.post("/", (req, res) => {
     console.log(req.body);
-    res.redirect('/user/' + req.body.user); 
-});
-
-app.get("/user/:id", (req, res) => {
-    var person = persons.find((e) => e.id === Number(req.params.id));
-    res.render("theme.hbs", {
-        pageTitle: "お題",
-        name: person['name'],
-        theme: person['theme'],
-    })
+    res.redirect('/'); 
 });
 
 app.get("/manage", (req, res) => {
@@ -95,9 +88,9 @@ app.post("/manage", (req, res) => {
         }
 
         //console.log(theme);
-        res.send(persons);
-        //res.redirect('/manage'); 
+        //res.send(persons);
+        res.redirect('/manage'); 
     }
 });
 
-app.listen(5000);
+app.listen(PORT);
