@@ -17,20 +17,6 @@ hbs.registerHelper("getCurrentYear", () => {
     return new Date().getFullYear();
 });
 
-app.get("/courses", (req, res) => {
-    res.send(courses);
-});
-
-app.get("/courses/:id", (req, res) => {
-    let course = courses.find(e => e.id === parseInt(req.params.id));
-    if (!course) {
-        res.send("naiyo");
-    }
-    res.send(course);
-});
-
-//----HOME----
-
 app.get("/", (req, res) => {
     res.render("home.hbs", {
         pageTitle: "HOME画面",
