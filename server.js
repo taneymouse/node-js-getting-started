@@ -12,21 +12,15 @@ const persons = [
 ];
 
 app.set("view engine", "hbs");
-hbs.registerPartials(__dirname + "/views/partials");
-hbs.registerHelper("getCurrentYear", () => {
-    return new Date().getFullYear();
-});
 
 app.get("/", (req, res) => {
     res.render("home.hbs", {
         pageTitle: "HOME画面",
         arrPersons : persons,
     });
-
 });
 
 app.post("/", (req, res) => {
-    console.log(req.body);
     res.redirect('/user/' + req.body.user); 
 });
 
@@ -46,7 +40,6 @@ app.get("/manage", (req, res) => {
 });
 
 app.post("/manage", (req, res) => {
-    //console.log(req.body);
     if (req.body.type === 'register') {
         let person = {
             id: persons.length + 1,
@@ -55,7 +48,6 @@ app.post("/manage", (req, res) => {
         };
         persons.push(person)
         res.send(persons);
-        //res.redirect('/manage'); 
     }else if(req.body.type === 'allocate'){
         const themes = JSON.parse(fs.readFileSync('./themes.json', 'utf-8'));
         // 乱数の生成
@@ -82,9 +74,8 @@ app.post("/manage", (req, res) => {
             }
         }
 
-        //console.log(theme);
-        //res.send(persons);
-        res.redirect('/manage'); 
+        res.send(persons);
+        //res.redirect('/manage'); 
     }
 });
 
