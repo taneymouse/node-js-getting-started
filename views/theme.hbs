@@ -3,6 +3,7 @@
 <html>
 
 <head>
+    {{>header}}
     <title>お題画面</title>
     <meta charset="UTF-8">
 </head>
@@ -11,7 +12,7 @@
     <h1>{{pageTitle}}</h1>
     <h2>{{name}}さんのお題は「{{theme}}」です！</h2>
     <br/>
-    <button onclick="history.back()">戻る</button>
+    <button class="btn btn-primary" onclick="history.back()">戻る</button>
 </body>
 
 </html>
