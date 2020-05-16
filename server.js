@@ -41,7 +41,16 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
     console.log(req.body);
-    res.redirect('/'); 
+    res.redirect('/user/' + req.body.user); 
+});
+
+app.get("/user/:id", (req, res) => {
+    var person = persons.find((e) => e.id === Number(req.params.id));
+    res.render("theme.hbs", {
+        pageTitle: "お題",
+        name: person['name'],
+        theme: person['theme'],
+    });
 });
 
 app.get("/manage", (req, res) => {
