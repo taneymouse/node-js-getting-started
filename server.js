@@ -9,8 +9,7 @@ const PORT = process.env.PORT || 5000
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const persons = [
-];
+let persons = [];
 
 app.set("view engine", "hbs");
 
@@ -49,7 +48,6 @@ app.post("/manage", (req, res) => {
             theme: null,
         };
         persons.push(person);
-        res.redirect('/manage');
     }else if(req.body.type === 'allocate'){
         const themes = JSON.parse(fs.readFileSync('./themes.json', 'utf-8'));
         // 乱数の生成
@@ -76,9 +74,10 @@ app.post("/manage", (req, res) => {
                 persons[i]['theme'] = theme['theme1'];
             }
         }
-
-        res.redirect('/manage');
+    } else if (req.body.type === 'delete') {
+        persons = persons.filter(person => person.name !== req.body.name)
     }
+    res.redirect('/manage');
 });
 
 app.listen(PORT);

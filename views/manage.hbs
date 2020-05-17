@@ -31,12 +31,19 @@
             <th>ID</th>
             <th>Name</th>
             <th>Theme</th>
+            <th>Delete</th>
         </tr>
         {{#each arrPersons as | val key |}}
         <tr>
             <td>{{this.id}}</td>
             <td>{{this.name}}</td>
             <td>{{this.theme}}</td>
+            <td>
+                <form method="post">
+                    <input type="hidden" name="name" value="{{this.name}}">
+                    <input type="submit" name="type" value="delete">
+                </form>
+            </td>
         </tr>
         {{/each}}
     </table>
