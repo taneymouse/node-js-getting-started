@@ -37,6 +37,7 @@ app.get("/user/:id", (req, res) => {
 app.get("/manage", (req, res) => {
     res.render("manage.hbs", {
         pageTitle: "管理画面",
+        arrPersons : persons,
     });
 });
 
@@ -47,8 +48,8 @@ app.post("/manage", (req, res) => {
             name: req.body.name,
             theme: null,
         };
-        persons.push(person)
-        res.send(persons);
+        persons.push(person);
+        res.redirect('/manage');
     }else if(req.body.type === 'allocate'){
         const themes = JSON.parse(fs.readFileSync('./themes.json', 'utf-8'));
         // 乱数の生成
@@ -75,8 +76,7 @@ app.post("/manage", (req, res) => {
             }
         }
 
-        res.send(persons);
-        //res.redirect('/manage'); 
+        res.redirect('/manage');
     }
 });
 

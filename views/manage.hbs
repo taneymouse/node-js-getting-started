@@ -26,6 +26,20 @@
             <input type="submit" name="type" value="allocate">
         </p>
     </form>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Theme</th>
+        </tr>
+        {{#each arrPersons as | val key |}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.theme}}</td>
+        </tr>
+        {{/each}}
+    </table>
 </body>
 
 </html>
