@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const hbs = require("hbs");
+hbs.registerPartials(__dirname + "/views/partials");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 5000
