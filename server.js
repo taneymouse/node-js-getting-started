@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-    res.redirect('/user/' + req.body.user); 
+    res.redirect('/user/' + req.body.user);
 });
 
 app.get("/user/:id", (req, res) => {
@@ -44,7 +44,7 @@ app.get("/manage", (req, res) => {
 app.post("/manage", (req, res) => {
     if (req.body.type === 'register') {
         let person = {
-            id: persons.length + 1,
+            id: null,
             name: req.body.name,
             theme: null,
         };
@@ -68,6 +68,7 @@ app.post("/manage", (req, res) => {
 
         var wolf = req.body.wolf;
         for(var i = 0; i < persons.length; i++){
+            persons[i]['id'] = i;
             if(wolf > 0){
                 persons[i]['theme'] = theme['theme2'];
                 wolf--;
