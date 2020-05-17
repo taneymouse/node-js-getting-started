@@ -42,12 +42,14 @@ app.get("/manage", (req, res) => {
 
 app.post("/manage", (req, res) => {
     if (req.body.type === 'register') {
-        let person = {
-            id: null,
-            name: req.body.name,
-            theme: null,
-        };
-        persons.push(person);
+        if (persons.find((e) => e.name === req.body.name) == null) {
+            let person = {
+                id: null,
+                name: req.body.name,
+                theme: null,
+            };
+            persons.push(person);
+        }
     }else if(req.body.type === 'allocate'){
         const themes = JSON.parse(fs.readFileSync('./themes.json', 'utf-8'));
         // 乱数の生成
