@@ -76,7 +76,7 @@ app.post("/manage", (req, res) => {
             }
         }
     } else if (req.body.type === 'delete') {
-        persons = persons.filter(person => person.name !== req.body.name)
+        persons = persons.filter(person => person.id !== req.body.id);
     }
     res.redirect('/manage');
 });
