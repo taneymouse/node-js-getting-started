@@ -9,8 +9,7 @@ const PORT = process.env.PORT || 5000
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const persons = [
-];
+let persons = [];
 
 app.set("view engine", "hbs");
 
@@ -22,11 +21,11 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-    res.redirect('/user/' + req.body.user); 
+    res.redirect('/user/' + req.body.user);
 });
 
 app.get("/user/:id", (req, res) => {
-    var person = persons.find((e) => e.id === Number(req.params.id));
+    var person = persons.find((e) => e.id === req.params.id);
     res.render("theme.hbs", {
         pageTitle: "お題",
         name: person['name'],
@@ -37,18 +36,20 @@ app.get("/user/:id", (req, res) => {
 app.get("/manage", (req, res) => {
     res.render("manage.hbs", {
         pageTitle: "管理画面",
+        arrPersons : persons,
     });
 });
 
 app.post("/manage", (req, res) => {
     if (req.body.type === 'register') {
-        let person = {
-            id: persons.length + 1,
-            name: req.body.name,
-            theme: null,
-        };
-        persons.push(person)
-        res.send(persons);
+        if (persons.find((e) => e.name === req.body.name) == null) {
+            let person = {
+                id: escape(req.body.name),
+                name: req.body.name,
+                theme: null,
+            };
+            persons.push(person);
+        }
     }else if(req.body.type === 'allocate'){
         const themes = JSON.parse(fs.readFileSync('./themes.json', 'utf-8'));
         // 乱数の生成
@@ -74,10 +75,10 @@ app.post("/manage", (req, res) => {
                 persons[i]['theme'] = theme['theme1'];
             }
         }
-
-        res.send(persons);
-        //res.redirect('/manage'); 
+    } else if (req.body.type === 'delete') {
+        persons = persons.filter(person => person.id !== req.body.id);
     }
+    res.redirect('/manage');
 });
 
 app.listen(PORT);
