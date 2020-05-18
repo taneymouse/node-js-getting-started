@@ -4,22 +4,33 @@
 
 <head>
     {{>header}}
-    <title>HOME画面</title>
+    <title>WORDWOLF</title>
     <meta charset="UTF-8">
 </head>
 
-<body>
-    <h1>{{pageTitle}}</h1>
+<body class="user">
+    <header>
+        <h1>WORDWOLF</h1>
+    </header>
+    <img src="images/wordwolf.png" alt="wordwolf">
     <form method="post">
-        <p>名前を選択してお題を確認</p>
+        <h2>なまえをえらんでね</h2>
         <p>
             <select name="user">
                 {{#each arrPersons as | val key |}}
                 <option value="{{this.id}}">{{this.name}}</option>
                 {{/each}}
             </select>
-            <input type="submit" name="type" value="お題を確認">
+            <button class="btn" name="type" value="check">お題を確認</button>
         </p>
+    </form>
+    <br>
+    <br>
+    <br>
+    <form method="post">
+        <button class="btn" name="type" value="manage">
+            管理ページへ
+        </button>
     </form>
 </body>
 
