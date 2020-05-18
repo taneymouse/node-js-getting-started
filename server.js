@@ -25,7 +25,7 @@ app.post("/", (req, res) => {
 });
 
 app.get("/user/:id", (req, res) => {
-    var person = persons.find((e) => e.id === Number(req.params.id));
+    var person = persons.find((e) => e.id === req.params.id);
     res.render("theme.hbs", {
         pageTitle: "お題",
         name: person['name'],
@@ -44,7 +44,7 @@ app.post("/manage", (req, res) => {
     if (req.body.type === 'register') {
         if (persons.find((e) => e.name === req.body.name) == null) {
             let person = {
-                id: null,
+                id: escape(req.body.name),
                 name: req.body.name,
                 theme: null,
             };
@@ -68,7 +68,6 @@ app.post("/manage", (req, res) => {
 
         var wolf = req.body.wolf;
         for(var i = 0; i < persons.length; i++){
-            persons[i]['id'] = i;
             if(wolf > 0){
                 persons[i]['theme'] = theme['theme2'];
                 wolf--;
