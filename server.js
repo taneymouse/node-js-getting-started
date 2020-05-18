@@ -4,10 +4,12 @@ const hbs = require("hbs");
 hbs.registerPartials(__dirname + "/views/partials");
 const fs = require("fs");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 const PORT = process.env.PORT || 5000
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'));
 
 let persons = [];
 
@@ -75,9 +77,20 @@ app.post("/manage", (req, res) => {
                 persons[i]['theme'] = theme['theme1'];
             }
         }
-    } else if (req.body.type === 'delete') {
-        persons = persons.filter(person => person.id !== req.body.id);
     }
+    res.redirect('/manage');
+});
+
+app.delete("/user/:id", (req, res) => {
+    // 該当IDのデータを検索
+    let person = persons.find((e) => e.id === req.params.id);
+    if(!person){
+        res.send("該当IDのユーザが見つかりませんでした。");
+    }
+    // 削除
+    let index = persons.indexOf(person);
+    persons.splice(index, 1);
+    // リダイレクト
     res.redirect('/manage');
 });
 

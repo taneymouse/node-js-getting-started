@@ -43,9 +43,8 @@
                 </font>
             </td>
             <td>
-                <form method="post">
-                    <input type="hidden" name="id" value="{{this.id}}">
-                    <input type="submit" name="type" value="delete">
+                <form method="post" action="/user/{{this.id}}?_method=DELETE">
+                    <input type="submit" value="delete">
                 </form>
             </td>
         </tr>
