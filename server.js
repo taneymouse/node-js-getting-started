@@ -61,12 +61,7 @@ app.post("/manage", (req, res) => {
         // テーマの取得
         var theme = themes.find((e) => e.id === String(rand));
 
-        for(var i = persons.length - 1; i > 0; i--){
-            var r = Math.floor(Math.random() * (i + 1));
-            var tmp = persons[i];
-            persons[i] = persons[r];
-            persons[r] = tmp;
-        }
+        persons = shuffle(persons);
 
         var wolf = req.body.wolf;
         for(var i = 0; i < persons.length; i++){
@@ -77,6 +72,8 @@ app.post("/manage", (req, res) => {
                 persons[i]['theme'] = theme['theme1'];
             }
         }
+
+        persons = shuffle(persons);
     }
     res.redirect('/manage');
 });
@@ -95,3 +92,13 @@ app.delete("/user/:id", (req, res) => {
 });
 
 app.listen(PORT);
+
+function shuffle(arr){
+    for(var i = arr.length - 1; i > 0; i--){
+        var r = Math.floor(Math.random() * (i + 1));
+        var tmp = arr[i];
+        arr[i] = arr[r];
+        arr[r] = tmp;
+    }
+    return arr;
+}
