@@ -1,27 +1,34 @@
-.jumbotron {
-  background: #532F8C;
+header {
+  height: 100px;
+  width: 100%;
+  padding: 15px 0;
+  background-color: #ff8b82;
   color: white;
-  padding-bottom: 80px; }
-  .jumbotron .btn-primary {
-    background: #845ac7;
-    border-color: #845ac7; }
-    .jumbotron .btn-primary:hover {
-      background: #7646c1; }
-  .jumbotron p {
-    color: #d9ccee;
-    max-width: 75%;
-    margin: 1em auto 2em; }
-  .navbar + .jumbotron {
-    margin-top: -20px; }
-  .jumbotron .lang-logo {
-    display: block;
-    background: #B01302;
-    border-radius: 50%;
-    overflow: hidden;
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    border: 2px solid white; }
-    .jumbotron .lang-logo img {
-      max-width: 100%; }
+}
 
+.user {
+  font-family: 'Wawati SC';
+}
+
+form {
+  margin-left: 20px;
+}
+
+button {
+  margin-left: 20px;
+}
+
+.btn {
+  background-color: #ff8b82;
+  color: white;
+  font-size: large;
+}
+
+h1 {
+  margin-left: 15px;
+  font-family: 'Chalkduster', 'Wawati SC';
+}
+
+h2 {
+  font-family: 'Wawati SC';
+}

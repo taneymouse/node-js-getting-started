@@ -1,15 +1,20 @@
 const express = require("express");
+const path = require('path');
 const app = express();
 const hbs = require("hbs");
-hbs.registerPartials(__dirname + "/views/partials");
 const fs = require("fs");
+const favicon = require("serve-favicon");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const PORT = process.env.PORT || 5000
+const publicPath = path.join(__dirname, '/public');
 
+hbs.registerPartials(__dirname + "/views/partials");
+app.use('/', express.static(publicPath));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
+app.use(favicon(publicPath + '/images/favicon.ico'));
 
 let persons = [];
 
@@ -17,19 +22,21 @@ app.set("view engine", "hbs");
 
 app.get("/", (req, res) => {
     res.render("home.hbs", {
-        pageTitle: "HOME画面",
         arrPersons : persons,
     });
 });
 
 app.post("/", (req, res) => {
-    res.redirect('/user/' + req.body.user);
+    if (req.body.type === 'check') {
+        res.redirect('/user/' + req.body.user);
+    } else if (req.body.type === 'manage') {
+        res.redirect('/manage');
+    }
 });
 
 app.get("/user/:id", (req, res) => {
     var person = persons.find((e) => e.id === req.params.id);
     res.render("theme.hbs", {
-        pageTitle: "お題",
         name: person['name'],
         theme: person['theme'],
     });
@@ -37,7 +44,6 @@ app.get("/user/:id", (req, res) => {
 
 app.get("/manage", (req, res) => {
     res.render("manage.hbs", {
-        pageTitle: "管理画面",
         arrPersons : persons,
     });
 });
