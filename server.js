@@ -2,17 +2,19 @@ const express = require("express");
 const path = require('path');
 const app = express();
 const hbs = require("hbs");
-hbs.registerPartials(__dirname + "/views/partials");
 const fs = require("fs");
+const favicon = require("serve-favicon");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const PORT = process.env.PORT || 5000
-
 const publicPath = path.join(__dirname, '/public');
+
+hbs.registerPartials(__dirname + "/views/partials");
 app.use('/', express.static(publicPath));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
+app.use(favicon(publicPath + '/images/favicon.ico'));
 
 let persons = [];
 
