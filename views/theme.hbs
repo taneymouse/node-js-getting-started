@@ -9,12 +9,34 @@
 </head>
 
 <body>
-    <header>
-        <h1>お題</h1>
-    </header>
-    <h2>{{name}}さんのお題は「{{theme}}」です！</h2>
-    <br/>
-    <button class="btn" onclick="history.back()">戻る</button>
+    <div class="container">
+        <header>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>お題</h1>
+                </div>
+                <div class="col-sm-6 align-right">
+                    <button class="btn" onclick="history.back()">
+                        TOPページへ
+                    </button>
+                </div>
+            </div>
+        </header>
+    </div>
+    <hr>
+
+    <div class="container">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h2>{{name}}さんのお題は「{{theme}}」です！</h2>
+        </div>
+    </div>
+
+    <hr>
+    <div class="container">
+        <footer>
+            <p>&copy; EKTstudio</p>
+        </footer>
+    </div>
 </body>
 
 </html>
