@@ -57,6 +57,8 @@ app.post("/manage", (req, res) => {
                 theme: null,
             };
             persons.push(person);
+
+            res.redirect('/manage');
         } else {
             res.send("同名のユーザが存在します。");
         }
@@ -82,8 +84,9 @@ app.post("/manage", (req, res) => {
         }
 
         persons = shuffle(persons);
+
+        res.redirect('/manage');
     }
-    res.redirect('/manage');
 });
 
 app.delete("/user/:id", (req, res) => {
