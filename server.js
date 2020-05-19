@@ -35,7 +35,7 @@ app.post("/", (req, res) => {
 });
 
 app.get("/user/:id", (req, res) => {
-    var person = persons.find((e) => e.id === req.params.id);
+    var person = persons.find((e) => e.id === Number(req.params.id));
     res.render("theme.hbs", {
         name: person['name'],
         theme: person['theme'],
@@ -52,11 +52,13 @@ app.post("/manage", (req, res) => {
     if (req.body.type === 'register') {
         if (persons.find((e) => e.name === req.body.name) == null) {
             let person = {
-                id: escape(req.body.name),
+                id: getNewId(),
                 name: req.body.name,
                 theme: null,
             };
             persons.push(person);
+        } else {
+            res.send("同名のユーザが存在します。");
         }
     }else if(req.body.type === 'allocate'){
         const themes = JSON.parse(fs.readFileSync('./themes.json', 'utf-8'));
@@ -86,7 +88,7 @@ app.post("/manage", (req, res) => {
 
 app.delete("/user/:id", (req, res) => {
     // 該当IDのデータを検索
-    let person = persons.find((e) => e.id === req.params.id);
+    let person = persons.find((e) => e.id === Number(req.params.id));
     if(!person){
         res.send("該当IDのユーザが見つかりませんでした。");
     }
@@ -107,4 +109,14 @@ function shuffle(arr){
         arr[r] = tmp;
     }
     return arr;
+}
+
+function getNewId() {
+    for(let i = 1; i <= persons.length; i++) {
+        const person = persons.find((e) => e.id === i);
+        if(!person){
+            return i;
+        }
+    }
+    return persons.length + 1;
 }
