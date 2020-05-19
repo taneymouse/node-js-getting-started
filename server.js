@@ -86,6 +86,8 @@ app.post("/manage", (req, res) => {
         persons = shuffle(persons);
 
         res.redirect('/manage');
+    }else if(req.body.type === 'top'){
+        res.redirect('/');
     }
 });
 
