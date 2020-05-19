@@ -17,6 +17,7 @@ app.use(methodOverride('_method'));
 app.use(favicon(publicPath + '/images/favicon.ico'));
 
 let persons = [];
+let theme;
 
 app.set("view engine", "hbs");
 
@@ -35,16 +36,23 @@ app.post("/", (req, res) => {
 });
 
 app.get("/user/:id", (req, res) => {
-    var person = persons.find((e) => e.id === Number(req.params.id));
-    res.render("theme.hbs", {
-        name: person['name'],
-        theme: person['theme'],
-    });
+    const person = persons.find((e) => e.id === Number(req.params.id));
+
+    if (theme) {
+        res.render("theme.hbs", {
+            name: person['name'],
+            theme: person['isWolf'] ? theme['theme2'] : theme['theme1'],
+        });
+    } else {
+        res.send("お題が設定されていません。");
+    }
 });
 
 app.get("/manage", (req, res) => {
     res.render("manage.hbs", {
         arrPersons : persons,
+        theme1 : theme ? theme['theme1'] : 'Not allocated',
+        theme2 : theme ? theme['theme2'] : 'Not allocated',
     });
 });
 
@@ -54,7 +62,7 @@ app.post("/manage", (req, res) => {
             let person = {
                 id: getNewId(),
                 name: req.body.name,
-                theme: null,
+                isWolf: false,
             };
             persons.push(person);
 
@@ -62,31 +70,28 @@ app.post("/manage", (req, res) => {
         } else {
             res.send("同名のユーザが存在します。");
         }
-    }else if(req.body.type === 'allocate'){
-        const themes = JSON.parse(fs.readFileSync('./themes.json', 'utf-8'));
-        // 乱数の生成
-        var min = 1;
-        var max = themes.length;
-        var rand = Math.floor(Math.random() * (max + 1 - min)) + min;
-        // テーマの取得
-        var theme = themes.find((e) => e.id === String(rand));
+    } else if (req.body.type === 'allocate') {
+        theme = getRandomTheme();
 
-        persons = shuffle(persons);
-
+        let wolfArray = [];
         var wolf = req.body.wolf;
-        for(var i = 0; i < persons.length; i++){
-            if(wolf > 0){
-                persons[i]['theme'] = theme['theme2'];
+        for (var i = 0; i < persons.length; i++) {
+            if (wolf > 0) {
+                wolfArray.push(true);
                 wolf--;
-            }else{
-                persons[i]['theme'] = theme['theme1'];
+            } else {
+                wolfArray.push(false);
             }
         }
 
-        persons = shuffle(persons);
+        wolfArray = shuffle(wolfArray);
+
+        for (var i = 0; i < persons.length; i++) {
+            persons[i]['isWolf'] = wolfArray[i];
+        }
 
         res.redirect('/manage');
-    }else if(req.body.type === 'top'){
+    } else if (req.body.type === 'top') {
         res.redirect('/');
     }
 });
@@ -124,4 +129,13 @@ function getNewId() {
         }
     }
     return persons.length + 1;
+}
+
+function getRandomTheme() {
+    const themes = JSON.parse(fs.readFileSync('./themes.json', 'utf-8'));
+    const min = 1;
+    const max = themes.length;
+    const themeId = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    return themes.find((e) => e.id === String(themeId));
 }

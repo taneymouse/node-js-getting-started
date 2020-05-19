@@ -29,11 +29,17 @@
             <input type="submit" name="type" value="allocate">
         </p>
     </form>
+    <p>
+        人間: <font color="white">{{theme1}}</font>
+    </p>
+    <p>
+        ウルフ: <font color="white">{{theme2}}</font>
+    </p>
     <table class="table table-striped">
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Theme</th>
+            <th>Role</th>
             <th>Delete</th>
         </tr>
         {{#each arrPersons as | val key |}}
@@ -42,7 +48,11 @@
             <td>{{this.name}}</td>
             <td>
                 <font color="white">
-                    {{this.theme}}
+                    {{#if this.isWolf}}
+                    オオカミ
+                    {{else}}
+                    人間
+                    {{/if}}
                 </font>
             </td>
             <td>
@@ -53,6 +63,10 @@
         </tr>
         {{/each}}
     </table>
+    <br>
+    <br>
+    <br>
+    <br>
     <form method="post">
         <button class="btn" name="type" value="top">
             TOPページへ
