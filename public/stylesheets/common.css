@@ -1,31 +1,29 @@
 header {
-  height: 100px;
-  width: 100%;
-  padding: 15px 0;
-  background-color: #ff8b82;
-  color: white;
-}
-
-form {
-  margin-left: 20px;
-}
-
-button {
-  margin-left: 20px;
+  margin-top: 30px;
+  color: #ff8b82;
 }
 
 .btn {
   background-color: #ff8b82;
   color: white;
   font-size: large;
-  font-family: 'Wawati SC';
 }
 
 h1 {
-  margin-left: 15px;
-  font-family: 'Chalkduster', 'Wawati SC';
+  font-size: 48px;
+  font-weight: bold;
+  margin: 0;
 }
 
-h2 {
-  font-family: 'Wawati SC';
+hr {
+  border-width: 3px;
+  border-color: #ff8b82;
+}
+
+.align-right {
+  text-align: right;
+}
+
+label {
+  font-size: 24px;
 }

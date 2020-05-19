@@ -9,29 +9,53 @@
 </head>
 
 <body>
-    <header>
-        <h1>WORDWOLF</h1>
-    </header>
-    <img src="images/wordwolf.png" alt="wordwolf">
-    <form method="post">
-        <h2>なまえをえらんでね</h2>
-        <p>
-            <select name="user">
-                {{#each arrPersons as | val key |}}
-                <option value="{{this.id}}">{{this.name}}</option>
-                {{/each}}
-            </select>
-            <button class="btn" name="type" value="check">お題を確認</button>
-        </p>
-    </form>
-    <br>
-    <br>
-    <br>
-    <form method="post">
-        <button class="btn" name="type" value="manage">
-            管理ページへ
-        </button>
-    </form>
+    <div class="container">
+        <header>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>WORDWOLF</h1>
+                </div>
+                <div class="col-sm-6 align-right">
+                    <form method="post">
+                        <button class="btn" name="type" value="manage">
+                            管理ページへ
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <hr>
+    <div class="container">
+        <form method="post" class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <img src="images/wordwolf.png" alt="wordwolf">
+            </div>
+            <div class="col-sm-4 col-sm-offset-4">
+                <div class="form-group">
+                    <label for="name">あなたの名前をえらんでね</label>
+                    <select id="name" name="user" class="form-control">
+                        {{#each arrPersons as | val key |}}
+                        <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div>
+                    <button class="btn" name="type" value="check">お題を確認</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr>
+
+    <div class="container">
+        <form method="post">
+            <button class="btn" name="type" value="manage">
+                管理ページへ
+            </button>
+        </form>
+    </div>
 </body>
 
 </html>
