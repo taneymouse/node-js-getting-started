@@ -9,69 +9,92 @@
 </head>
 
 <body>
-    <header>
-        <h1>管理画面</h1>
-    </header>
-    <br>
-    <form method="post">
-        <p>名前：
-            <input type="text" name="name">
-            <input type="submit" name="type" value="register">
-        </p>
-    </form>
-    <form method="post">
-        <p>
-            <select name="wolf">
-                <option value="1" selected>ウルフは1人</option>
-                <option value="2">ウルフは2人</option>
-                <option value="3">ウルフは3人</option>
-            </select>
-            <input type="submit" name="type" value="allocate">
-        </p>
-    </form>
-    <p>
-        人間: <font color="white">{{theme1}}</font>
-    </p>
-    <p>
-        ウルフ: <font color="white">{{theme2}}</font>
-    </p>
-    <table class="table table-striped">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Delete</th>
-        </tr>
-        {{#each arrPersons as | val key |}}
-        <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.name}}</td>
-            <td>
-                <font color="white">
-                    {{#if this.isWolf}}
-                    ウルフ
-                    {{else}}
-                    人間
-                    {{/if}}
-                </font>
-            </td>
-            <td>
-                <form method="post" action="/user/{{this.id}}?_method=DELETE">
-                    <input type="submit" value="delete">
-                </form>
-            </td>
-        </tr>
-        {{/each}}
-    </table>
-    <br>
-    <br>
-    <br>
-    <br>
-    <form method="post">
-        <button class="btn" name="type" value="top">
-            TOPページへ
-        </button>
-    </form>
+    <div class="container">
+        <header>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>管理画面</h1>
+                </div>
+                <div class="col-sm-6 align-right">
+                    <form method="post">
+                        <button class="btn" name="type" value="top">
+                            TOPページへ
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+    </div>
+    <hr>
+
+    <div class="container">
+        <form method="post" class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="form-group">
+                    <label for="name">名前：</label>
+                    <input id="name" type="text" name="name" class="form-control" autofocus>
+                    <input type="submit" name="type" value="register">
+                </div>
+            </div>
+        </form>
+        <form method="post" class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="form-group">
+                    <label>ウルフ：</label>
+                    <select name="wolf" class="form-control">
+                        <option value="1" selected>1人</option>
+                        <option value="2">2人</option>
+                        <option value="3">3人</option>
+                    </select>
+                    <input type="submit" name="type" value="allocate">
+                </div>
+                </p>
+            </div>
+        </form>
+        <div class="row">
+            <p class="col-sm-6 col-sm-offset-3">
+                ウルフ: <font color="white">{{theme2}}</font><br>
+                人間: <font color="white">{{theme1}}</font>
+            </p>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Delete</th>
+                </tr>
+                {{#each arrPersons as | val key |}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.name}}</td>
+                    <td>
+                        <font color="white">
+                            {{#if this.isWolf}}
+                            ウルフ
+                            {{else}}
+                            人間
+                            {{/if}}
+                        </font>
+                    </td>
+                    <td>
+                        <form method="post" action="/user/{{this.id}}?_method=DELETE">
+                            <input type="submit" value="delete">
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div>
+
+    <hr>
+    <div class="container">
+        <footer>
+            <p>&copy; EKTstudio</p>
+        </footer>
+    </div>
 </body>
 
 </html>
