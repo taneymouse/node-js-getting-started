@@ -50,8 +50,12 @@
         </form>
         <div class="row">
             <p class="col-sm-6 col-sm-offset-3">
+                {{#if hasTheme}}
                 ウルフ: <font color="white">{{theme2}}</font><br>
                 人間: <font color="white">{{theme1}}</font>
+                {{else}}
+                <font class="caution">お題が設定されていません</font>
+                {{/if}}
             </p>
         </div>
         <div class="table-responsive">
