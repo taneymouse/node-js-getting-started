@@ -37,8 +37,12 @@ app.get("/", (req, res) => {
 });
 
 app.post("/:operation", (req, res) => {
-    if (req.params.operation === 'check') {
-        res.redirect('/user/' + req.body.user);
+    switch (req.params.operation) {
+        case 'check':
+            res.redirect('/user/' + req.body.user);
+            break;
+        default:
+            break;
     }
 });
 
@@ -51,40 +55,45 @@ app.get("/manage", (req, res) => {
 });
 
 app.post("/manage/:operation", (req, res) => {
-    if (req.params.operation === 'register') {
-        if (persons.find((e) => e.name === req.body.name) == null) {
-            let person = {
-                id: getNewId(),
-                name: req.body.name,
-                isWolf: false,
-            };
-            persons.push(person);
+    switch (req.params.operation) {
+        case 'register':
+            if (persons.find((e) => e.name === req.body.name) == null) {
+                let person = {
+                    id: getNewId(),
+                    name: req.body.name,
+                    isWolf: false,
+                };
+                persons.push(person);
+
+                res.redirect('/manage');
+            } else {
+                res.send("同名のユーザが存在します。");
+            }
+            break;
+        case 'allocate':
+            theme = getRandomTheme();
+
+            let wolfArray = [];
+            var wolf = req.body.wolf;
+            for (var i = 0; i < persons.length; i++) {
+                if (wolf > 0) {
+                    wolfArray.push(true);
+                    wolf--;
+                } else {
+                    wolfArray.push(false);
+                }
+            }
+
+            wolfArray = shuffle(wolfArray);
+
+            for (var i = 0; i < persons.length; i++) {
+                persons[i]['isWolf'] = wolfArray[i];
+            }
 
             res.redirect('/manage');
-        } else {
-            res.send("同名のユーザが存在します。");
-        }
-    } else if (req.params.operation === 'allocate') {
-        theme = getRandomTheme();
-
-        let wolfArray = [];
-        var wolf = req.body.wolf;
-        for (var i = 0; i < persons.length; i++) {
-            if (wolf > 0) {
-                wolfArray.push(true);
-                wolf--;
-            } else {
-                wolfArray.push(false);
-            }
-        }
-
-        wolfArray = shuffle(wolfArray);
-
-        for (var i = 0; i < persons.length; i++) {
-            persons[i]['isWolf'] = wolfArray[i];
-        }
-
-        res.redirect('/manage');
+            break;
+        default:
+            break;
     }
 });
 
