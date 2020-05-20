@@ -4,6 +4,7 @@
 
 <head>
     {{>header}}
+    <script type="text/javascript" src="/javascripts/manage.js"></script>
     <title>管理画面</title>
     <meta charset="UTF-8">
 </head>
@@ -50,15 +51,25 @@
                 </div>
             </div>
         </form>
+        <br>
         <div class="row">
-            <p class="col-sm-6 col-sm-offset-3">
-                {{#if hasTheme}}
-                ウルフ: <font color="white">{{theme2}}</font><br>
-                人間: <font color="white">{{theme1}}</font>
-                {{else}}
+            {{#if hasTheme}}
+            <div class="col-sm-6 col-sm-offset-3">
+                <button id="show_answer" class="btn" onclick="showAnswer()">結果を表示</button>
+                <div class="answer">
+                    <div>人間: {{theme1}}</div>
+                    <div>
+                        <font color="red">ウルフ: {{theme2}}</font>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+            {{else}}
+            <div class="col-sm-6 col-sm-offset-3">
                 <font class="caution">お題が設定されていません</font>
-                {{/if}}
-            </p>
+            </div>
+            {{/if}}
         </div>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -73,13 +84,13 @@
                     <td>{{this.id}}</td>
                     <td>{{this.name}}</td>
                     <td>
-                        <font color="white">
+                        <div class="answer">
                             {{#if this.isWolf}}
-                            ウルフ
+                            <font color="red">ウルフ</font>
                             {{else}}
                             人間
                             {{/if}}
-                        </font>
+                        </div>
                     </td>
                     <td>
                         <form method="post" action="/user/{{this.id}}?_method=DELETE">
