@@ -136,6 +136,12 @@ function getRandomTheme() {
     const min = 1;
     const max = themes.length;
     const themeId = Math.floor(Math.random() * (max - min + 1)) + min;
+    // ランダムのお題を取得
+    const themeTmp = themes.find((e) => e.id === String(themeId));
+    const randomBool = Math.random() >= 0.5;
 
-    return themes.find((e) => e.id === String(themeId));
+    return {
+        theme1 : randomBool ? themeTmp['theme1'] : themeTmp['theme2'],
+        theme2 : randomBool ? themeTmp['theme2'] : themeTmp['theme1'],
+    }
 }
