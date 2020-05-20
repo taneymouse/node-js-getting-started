@@ -16,10 +16,8 @@
                     <h1>WORDWOLF</h1>
                 </div>
                 <div class="col-sm-6 align-right">
-                    <form method="post">
-                        <button class="btn" name="type" value="manage">
-                            管理ページへ
-                        </button>
+                    <form action="/manage" method="get">
+                        <button class="btn">管理画面へ</button>
                     </form>
                 </div>
             </div>
@@ -28,8 +26,8 @@
     <hr>
 
     <div class="container">
-        <form method="post" class="row">
-            <div class="col-sm-4 col-sm-offset-4">
+        <form action="/check" method="post" class="row">
+            <div class="col-sm-6 col-sm-offset-3">
                 <img src="images/wordwolf.png" alt="wordwolf">
             </div>
             <div class="col-sm-6 col-sm-offset-3">
@@ -42,7 +40,7 @@
                     </select>
                 </div>
                 <div>
-                    <button class="btn" name="type" value="check">お題を確認</button>
+                    <button class="btn">お題を確認</button>
                 </div>
             </div>
         </form>

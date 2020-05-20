@@ -16,10 +16,8 @@
                     <h1>管理画面</h1>
                 </div>
                 <div class="col-sm-6 align-right">
-                    <form method="post">
-                        <button class="btn" name="type" value="top">
-                            TOPページへ
-                        </button>
+                    <form action="/" method="get">
+                        <button class="btn">TOPページへ</button>
                     </form>
                 </div>
             </div>
@@ -28,16 +26,16 @@
     <hr>
 
     <div class="container">
-        <form method="post" class="row">
+        <form action="/manage/register" method="post" class="row">
             <div class="col-sm-6 col-sm-offset-3">
                 <div class="form-group">
                     <label for="name">名前：</label>
                     <input id="name" type="text" name="name" class="form-control" autofocus>
-                    <input type="submit" name="type" value="register">
+                    <input type="submit">
                 </div>
             </div>
         </form>
-        <form method="post" class="row">
+        <form action="/manage/allocate" method="post" class="row">
             <div class="col-sm-6 col-sm-offset-3">
                 <div class="form-group">
                     <label>ウルフ：</label>
@@ -46,7 +44,7 @@
                         <option value="2">2人</option>
                         <option value="3">3人</option>
                     </select>
-                    <input type="submit" name="type" value="allocate">
+                    <input type="submit">
                 </div>
                 </p>
             </div>

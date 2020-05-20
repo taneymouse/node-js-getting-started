@@ -16,6 +16,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
 app.use(favicon(publicPath + '/images/favicon.ico'));
 
+app.use((req, res, next) => {
+    if(Object.keys(req.query).length === 0 && req.url.indexOf('?') > 0){
+        target = req.url.replace('?', '');
+        res.redirect(target);
+    }else{
+        next();
+    }
+})
+
 let persons = [];
 let theme;
 
@@ -27,24 +36,9 @@ app.get("/", (req, res) => {
     });
 });
 
-app.post("/", (req, res) => {
-    if (req.body.type === 'check') {
+app.post("/:operation", (req, res) => {
+    if (req.params.operation === 'check') {
         res.redirect('/user/' + req.body.user);
-    } else if (req.body.type === 'manage') {
-        res.redirect('/manage');
-    }
-});
-
-app.get("/user/:id", (req, res) => {
-    const person = persons.find((e) => e.id === Number(req.params.id));
-
-    if (theme) {
-        res.render("theme.hbs", {
-            name: person['name'],
-            theme: person['isWolf'] ? theme['theme2'] : theme['theme1'],
-        });
-    } else {
-        res.send("お題が設定されていません。");
     }
 });
 
@@ -56,8 +50,8 @@ app.get("/manage", (req, res) => {
     });
 });
 
-app.post("/manage", (req, res) => {
-    if (req.body.type === 'register') {
+app.post("/manage/:operation", (req, res) => {
+    if (req.params.operation === 'register') {
         if (persons.find((e) => e.name === req.body.name) == null) {
             let person = {
                 id: getNewId(),
@@ -70,7 +64,7 @@ app.post("/manage", (req, res) => {
         } else {
             res.send("同名のユーザが存在します。");
         }
-    } else if (req.body.type === 'allocate') {
+    } else if (req.params.operation === 'allocate') {
         theme = getRandomTheme();
 
         let wolfArray = [];
@@ -91,8 +85,19 @@ app.post("/manage", (req, res) => {
         }
 
         res.redirect('/manage');
-    } else if (req.body.type === 'top') {
-        res.redirect('/');
+    }
+});
+
+app.get("/user/:id", (req, res) => {
+    const person = persons.find((e) => e.id === Number(req.params.id));
+
+    if (theme) {
+        res.render("theme.hbs", {
+            name: person['name'],
+            theme: person['isWolf'] ? theme['theme2'] : theme['theme1'],
+        });
+    } else {
+        res.send("お題が設定されていません。");
     }
 });
 
