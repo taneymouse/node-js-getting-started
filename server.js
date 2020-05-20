@@ -36,8 +36,8 @@ app.get("/", (req, res) => {
     });
 });
 
-app.post("/", (req, res) => {
-    if (req.body.type === 'check') {
+app.post("/:operation", (req, res) => {
+    if (req.params.operation === 'check') {
         res.redirect('/user/' + req.body.user);
     }
 });
@@ -50,8 +50,8 @@ app.get("/manage", (req, res) => {
     });
 });
 
-app.post("/manage", (req, res) => {
-    if (req.body.type === 'register') {
+app.post("/manage/:operation", (req, res) => {
+    if (req.params.operation === 'register') {
         if (persons.find((e) => e.name === req.body.name) == null) {
             let person = {
                 id: getNewId(),
@@ -64,7 +64,7 @@ app.post("/manage", (req, res) => {
         } else {
             res.send("同名のユーザが存在します。");
         }
-    } else if (req.body.type === 'allocate') {
+    } else if (req.params.operation === 'allocate') {
         theme = getRandomTheme();
 
         let wolfArray = [];
