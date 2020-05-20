@@ -31,7 +31,8 @@
                 <div class="form-group">
                     <label for="name">名前：</label>
                     <input id="name" type="text" name="name" class="form-control" autofocus>
-                    <input type="submit">
+                    <br>
+                    <button class="btn">ユーザを追加</button>
                 </div>
             </div>
         </form>
@@ -44,7 +45,8 @@
                         <option value="2">2人</option>
                         <option value="3">3人</option>
                     </select>
-                    <input type="submit">
+                    <br>
+                    <button class="btn">お題を更新</button>
                 </div>
             </div>
         </form>
@@ -81,7 +83,7 @@
                     </td>
                     <td>
                         <form method="post" action="/user/{{this.id}}?_method=DELETE">
-                            <input type="submit" value="delete">
+                            <input class="btn" type="submit" value="削除">
                         </form>
                     </td>
                 </tr>
