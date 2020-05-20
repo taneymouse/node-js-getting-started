@@ -16,6 +16,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
 app.use(favicon(publicPath + '/images/favicon.ico'));
 
+app.use((req, res, next) => {
+    if(Object.keys(req.query).length === 0 && req.url.indexOf('?') > 0){
+        target = req.url.replace('?', '');
+        res.redirect(target);
+    }else{
+        next();
+    }
+})
+
 let persons = [];
 let theme;
 
@@ -30,8 +39,6 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
     if (req.body.type === 'check') {
         res.redirect('/user/' + req.body.user);
-    } else if (req.body.type === 'manage') {
-        res.redirect('/manage');
     }
 });
 
@@ -91,8 +98,6 @@ app.post("/manage", (req, res) => {
         }
 
         res.redirect('/manage');
-    } else if (req.body.type === 'top') {
-        res.redirect('/');
     }
 });
 
