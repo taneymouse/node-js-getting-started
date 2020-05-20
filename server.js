@@ -42,19 +42,6 @@ app.post("/", (req, res) => {
     }
 });
 
-app.get("/user/:id", (req, res) => {
-    const person = persons.find((e) => e.id === Number(req.params.id));
-
-    if (theme) {
-        res.render("theme.hbs", {
-            name: person['name'],
-            theme: person['isWolf'] ? theme['theme2'] : theme['theme1'],
-        });
-    } else {
-        res.send("お題が設定されていません。");
-    }
-});
-
 app.get("/manage", (req, res) => {
     res.render("manage.hbs", {
         arrPersons : persons,
@@ -98,6 +85,19 @@ app.post("/manage", (req, res) => {
         }
 
         res.redirect('/manage');
+    }
+});
+
+app.get("/user/:id", (req, res) => {
+    const person = persons.find((e) => e.id === Number(req.params.id));
+
+    if (theme) {
+        res.render("theme.hbs", {
+            name: person['name'],
+            theme: person['isWolf'] ? theme['theme2'] : theme['theme1'],
+        });
+    } else {
+        res.send("お題が設定されていません。");
     }
 });
 
