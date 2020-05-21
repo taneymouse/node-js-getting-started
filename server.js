@@ -49,8 +49,9 @@ app.post("/:operation", (req, res) => {
 app.get("/manage", (req, res) => {
     res.render("manage.hbs", {
         arrPersons : persons,
-        theme1 : theme ? theme['theme1'] : 'Not allocated',
-        theme2 : theme ? theme['theme2'] : 'Not allocated',
+        hasTheme: theme,
+        theme1 : theme ? theme['theme1'] : '',
+        theme2 : theme ? theme['theme2'] : '',
     });
 });
 

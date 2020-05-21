@@ -4,6 +4,7 @@
 
 <head>
     {{>header}}
+    <script type="text/javascript" src="/javascripts/manage.js"></script>
     <title>管理画面</title>
     <meta charset="UTF-8">
 </head>
@@ -31,7 +32,8 @@
                 <div class="form-group">
                     <label for="name">名前：</label>
                     <input id="name" type="text" name="name" class="form-control" autofocus>
-                    <input type="submit">
+                    <br>
+                    <button class="btn">ユーザを追加</button>
                 </div>
             </div>
         </form>
@@ -44,15 +46,30 @@
                         <option value="2">2人</option>
                         <option value="3">3人</option>
                     </select>
-                    <input type="submit">
+                    <br>
+                    <button class="btn">お題を更新</button>
                 </div>
             </div>
         </form>
+        <br>
         <div class="row">
-            <p class="col-sm-6 col-sm-offset-3">
-                ウルフ: <font color="white">{{theme2}}</font><br>
-                人間: <font color="white">{{theme1}}</font>
-            </p>
+            {{#if hasTheme}}
+            <div class="col-sm-6 col-sm-offset-3">
+                <button id="show_answer" class="btn" onclick="showAnswer()">結果を表示</button>
+                <div class="answer">
+                    <div>人間: {{theme1}}</div>
+                    <div>
+                        <font color="red">ウルフ: {{theme2}}</font>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+            {{else}}
+            <div class="col-sm-6 col-sm-offset-3">
+                <font class="caution">お題が設定されていません</font>
+            </div>
+            {{/if}}
         </div>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -67,17 +84,17 @@
                     <td>{{this.id}}</td>
                     <td>{{this.name}}</td>
                     <td>
-                        <font color="white">
+                        <div class="answer">
                             {{#if this.isWolf}}
-                            ウルフ
+                            <font color="red">ウルフ</font>
                             {{else}}
                             人間
                             {{/if}}
-                        </font>
+                        </div>
                     </td>
                     <td>
                         <form method="post" action="/user/{{this.id}}?_method=DELETE">
-                            <input type="submit" value="delete">
+                            <input class="btn" type="submit" value="削除">
                         </form>
                     </td>
                 </tr>

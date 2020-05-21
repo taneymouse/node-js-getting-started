@@ -23,3 +23,13 @@ hr {
 .align-right {
   text-align: right;
 }
+
+.caution {
+  font-size: 36px;
+  color: red;
+}
+
+.answer {
+  display: none;
+  font-size: 18px;
+}
