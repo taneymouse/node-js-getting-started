@@ -1,42 +1,42 @@
-const express = require("express");
+const express = require('express');
 const path = require('path');
 const app = express();
-const hbs = require("hbs");
-const fs = require("fs");
-const favicon = require("serve-favicon");
-const bodyParser = require("body-parser");
-const methodOverride = require("method-override");
-const PORT = process.env.PORT || 5000
+const hbs = require('hbs');
+const fs = require('fs');
+const favicon = require('serve-favicon');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+const PORT = process.env.PORT || 5000;
 const publicPath = path.join(__dirname, '/public');
 
-hbs.registerPartials(__dirname + "/views/partials");
+hbs.registerPartials(__dirname + '/views/partials');
 app.use('/', express.static(publicPath));
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(favicon(publicPath + '/images/favicon.ico'));
 
 app.use((req, res, next) => {
-    if(Object.keys(req.query).length === 0 && req.url.indexOf('?') > 0){
+    if (Object.keys(req.query).length === 0 && req.url.indexOf('?') > 0) {
         target = req.url.replace('?', '');
         res.redirect(target);
-    }else{
+    } else {
         next();
     }
-})
+});
 
 let persons = [];
 let theme;
 
-app.set("view engine", "hbs");
+app.set('view engine', 'hbs');
 
-app.get("/", (req, res) => {
-    res.render("home.hbs", {
-        arrPersons : persons,
+app.get('/', (req, res) => {
+    res.render('home.hbs', {
+        arrPersons: persons,
     });
 });
 
-app.post("/:operation", (req, res) => {
+app.post('/:operation', (req, res) => {
     switch (req.params.operation) {
         case 'check':
             res.redirect('/user/' + req.body.user);
@@ -46,16 +46,16 @@ app.post("/:operation", (req, res) => {
     }
 });
 
-app.get("/manage", (req, res) => {
-    res.render("manage.hbs", {
-        arrPersons : persons,
+app.get('/manage', (req, res) => {
+    res.render('manage.hbs', {
+        arrPersons: persons,
         hasTheme: theme,
-        theme1 : theme ? theme['theme1'] : '',
-        theme2 : theme ? theme['theme2'] : '',
+        theme1: theme ? theme['theme1'] : '',
+        theme2: theme ? theme['theme2'] : '',
     });
 });
 
-app.post("/manage/:operation", (req, res) => {
+app.post('/manage/:operation', (req, res) => {
     switch (req.params.operation) {
         case 'register':
             if (persons.find((e) => e.name === req.body.name) == null) {
@@ -68,7 +68,7 @@ app.post("/manage/:operation", (req, res) => {
 
                 res.redirect('/manage');
             } else {
-                res.send("同名のユーザが存在します。");
+                res.send('同名のユーザが存在します。');
             }
             break;
         case 'allocate':
@@ -98,24 +98,24 @@ app.post("/manage/:operation", (req, res) => {
     }
 });
 
-app.get("/user/:id", (req, res) => {
+app.get('/user/:id', (req, res) => {
     const person = persons.find((e) => e.id === Number(req.params.id));
 
     if (theme) {
-        res.render("theme.hbs", {
+        res.render('theme.hbs', {
             name: person['name'],
             theme: person['isWolf'] ? theme['theme2'] : theme['theme1'],
         });
     } else {
-        res.send("お題が設定されていません。");
+        res.send('お題が設定されていません。');
     }
 });
 
-app.delete("/user/:id", (req, res) => {
+app.delete('/user/:id', (req, res) => {
     // 該当IDのデータを検索
     let person = persons.find((e) => e.id === Number(req.params.id));
-    if(!person){
-        res.send("該当IDのユーザが見つかりませんでした。");
+    if (!person) {
+        res.send('該当IDのユーザが見つかりませんでした。');
     }
     // 削除
     let index = persons.indexOf(person);
@@ -126,8 +126,8 @@ app.delete("/user/:id", (req, res) => {
 
 app.listen(PORT);
 
-function shuffle(arr){
-    for(var i = arr.length - 1; i > 0; i--){
+function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
         var r = Math.floor(Math.random() * (i + 1));
         var tmp = arr[i];
         arr[i] = arr[r];
@@ -137,9 +137,9 @@ function shuffle(arr){
 }
 
 function getNewId() {
-    for(let i = 1; i <= persons.length; i++) {
+    for (let i = 1; i <= persons.length; i++) {
         const person = persons.find((e) => e.id === i);
-        if(!person){
+        if (!person) {
             return i;
         }
     }
@@ -156,7 +156,7 @@ function getRandomTheme() {
     const randomBool = Math.random() >= 0.5;
 
     return {
-        theme1 : randomBool ? themeTmp['theme1'] : themeTmp['theme2'],
-        theme2 : randomBool ? themeTmp['theme2'] : themeTmp['theme1'],
-    }
+        theme1: randomBool ? themeTmp['theme1'] : themeTmp['theme2'],
+        theme2: randomBool ? themeTmp['theme2'] : themeTmp['theme1'],
+    };
 }
